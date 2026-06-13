@@ -6,8 +6,25 @@ import { defineConfig, fontProviders } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://example.com',
-	integrations: [mdx(), sitemap()],
+	// NOTE: this is the canonical production URL. It drives the sitemap,
+	// canonical <link> tags, the RSS feed, and Open Graph image URLs.
+	// Change it if your blog lives on a different domain/subdomain.
+	site: 'https://bekogeko.dev',
+	integrations: [
+		mdx(),
+		sitemap({
+			changefreq: 'weekly',
+			priority: 0.7,
+			lastmod: new Date(),
+			// Give the homepage top priority; everything else inherits the defaults.
+			serialize(item) {
+				if (item.url === 'https://bekogeko.dev/') {
+					item.priority = 1.0;
+				}
+				return item;
+			},
+		}),
+	],
 	fonts: [
 		{
 			provider: fontProviders.local(),

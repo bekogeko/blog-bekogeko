@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bekogeko.dev/sitemap-index.xml
