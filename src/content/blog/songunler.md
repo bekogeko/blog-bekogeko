@@ -2,7 +2,7 @@
 title: 'Son gunlerde Yapayzeka'
 description: 'son gunlerde aklimdan gecen'
 pubDate: 'Jun 14 2026'
-category: 'Life'
+category: 'Software'
 tags: ['thoughts', 'turkish','ai']
 ---
 Son gunlerde aklimdan yapay zeka le alakali onca dusunce geciyor. Yillardir kod yazmama ragmen su anki durumu ilk defa hissediyorum
