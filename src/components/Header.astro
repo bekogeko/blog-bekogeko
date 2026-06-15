@@ -3,133 +3,21 @@ import { SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
 ---
 
-<header>
-	<nav>
-		<a href="/" class="brand">
-			<span class="brand-mark" aria-hidden="true">🌙</span>
-			<span class="brand-text">{SITE_TITLE}</span>
+<header class="border-b border-border">
+	<nav
+		class="mx-auto flex h-[58px] w-[760px] max-w-[calc(100%-2.5rem)] items-center justify-between gap-4 sm:gap-6"
+	>
+		<a
+			href="/"
+			class="max-w-[40vw] truncate text-[1.05rem] font-bold tracking-tight text-foreground hover:text-foreground sm:max-w-none"
+		>
+			{SITE_TITLE}
 		</a>
-		<div class="internal-links">
-			<HeaderLink href="/">Home</HeaderLink>
+		<div class="flex items-center gap-0.5 sm:gap-1">
 			<HeaderLink href="/blog">Blog</HeaderLink>
+			<HeaderLink href="/tags">Tags</HeaderLink>
+			<HeaderLink href="/categories">Categories</HeaderLink>
 			<HeaderLink href="/about">About</HeaderLink>
-		</div>
-		<div class="social-links">
-			<!-- TODO: point these at your own profiles -->
-			<a href="https://github.com/" target="_blank" rel="noopener">
-				<span class="sr-only">GitHub</span>
-				<svg viewBox="0 0 16 16" aria-hidden="true" width="22" height="22"
-					><path
-						fill="currentColor"
-						d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
-					></path></svg
-				>
-			</a>
-			<a href="https://twitter.com/" target="_blank" rel="noopener">
-				<span class="sr-only">Twitter / X</span>
-				<svg viewBox="0 0 16 16" aria-hidden="true" width="22" height="22"
-					><path
-						fill="currentColor"
-						d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"
-					></path></svg
-				>
-			</a>
 		</div>
 	</nav>
 </header>
-<style>
-	header {
-		position: sticky;
-		top: 0;
-		z-index: 50;
-		margin: 0;
-		padding: 0 1.25em;
-		background: var(--bg-glass);
-		backdrop-filter: saturate(160%) blur(12px);
-		-webkit-backdrop-filter: saturate(160%) blur(12px);
-		border-bottom: 1px solid var(--border);
-	}
-	nav {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 1em;
-		max-width: 1100px;
-		margin: 0 auto;
-		height: 60px;
-	}
-	.brand {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5em;
-		font-size: 1.05rem;
-		font-weight: 700;
-		letter-spacing: -0.01em;
-		color: var(--text);
-	}
-	.brand:hover {
-		text-decoration: none;
-		color: var(--text);
-	}
-	.brand-mark {
-		filter: drop-shadow(0 0 8px var(--accent-glow));
-	}
-	.brand-text {
-		background: linear-gradient(90deg, var(--accent-bright), var(--accent-2));
-		-webkit-background-clip: text;
-		background-clip: text;
-		color: transparent;
-	}
-	.internal-links {
-		display: flex;
-		gap: 0.25em;
-	}
-	nav :global(a) {
-		color: var(--text-muted);
-	}
-	.internal-links :global(a) {
-		padding: 0.4em 0.8em;
-		border-radius: 999px;
-		transition:
-			color 0.18s ease,
-			background 0.18s ease;
-	}
-	.internal-links :global(a:hover) {
-		color: var(--text);
-		background: var(--bg-elev-2);
-		text-decoration: none;
-	}
-	.internal-links :global(a.active) {
-		color: var(--accent-bright);
-		background: rgba(139, 140, 255, 0.12);
-	}
-	.social-links {
-		display: flex;
-		gap: 0.25em;
-	}
-	.social-links a {
-		display: flex;
-		align-items: center;
-		padding: 0.4em;
-		border-radius: 8px;
-		color: var(--text-faint);
-		transition:
-			color 0.18s ease,
-			background 0.18s ease;
-	}
-	.social-links a:hover {
-		color: var(--accent-bright);
-		background: var(--bg-elev-2);
-	}
-	@media (max-width: 720px) {
-		.social-links {
-			display: none;
-		}
-		.brand-text {
-			max-width: 40vw;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
-	}
-</style>

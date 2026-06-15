@@ -1,33 +1,46 @@
 ---
-import Layout from '../layouts/BlogPost.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
 ---
 
-<Layout
-	title="About"
-	description="A little about this blog and the person writing it."
-	pubDate={new Date()}
->
-	<p>
-		Hi, I'm Bekir. This is my corner of the internet — a blog about
-		<em>anything</em>. Code I'm tinkering with, things I'm learning, and the odd
-		late-night thought that's easier to write down than to keep rattling around.
-	</p>
-
-	<p>
-		There's no single theme here on purpose. Some posts will be technical, some
-		will be personal, and some will just be me thinking out loud. If that sounds
-		like your kind of place, stick around.
-	</p>
-
-	<h2>What you'll find</h2>
-	<ul>
-		<li>Notes on projects and the things I build</li>
-		<li>Lessons learned the hard way</li>
-		<li>Whatever's on my mind after dark</li>
-	</ul>
-
-	<p>
-		Want to say hi? The links in the header and footer are the best way to reach
-		me. Thanks for reading. 🌙
-	</p>
-</Layout>
+<!doctype html>
+<html lang="en" class="dark">
+	<head>
+		<BaseHead
+			title={`About · ${SITE_TITLE}`}
+			description="A little about this blog and the person writing it."
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="mx-auto w-[680px] max-w-[calc(100%-2.5rem)] py-12">
+			<h1 class="text-[clamp(2rem,5vw,2.75rem)] font-bold tracking-tight">About</h1>
+			<div class="prose prose-invert mt-6 max-w-none">
+				<p>
+					Hi, I'm Bekir. This is my corner of the internet — a blog about
+					<em>anything</em>. Code I'm tinkering with, things I'm learning, and the
+					odd late-night thought that's easier to write down than to keep rattling
+					around.
+				</p>
+				<p>
+					There's no single theme here on purpose. Some posts will be technical,
+					some will be personal, and some will just be me thinking out loud. If
+					that sounds like your kind of place, stick around.
+				</p>
+				<h2>What you'll find</h2>
+				<ul>
+					<li>Notes on projects and the things I build</li>
+					<li>Lessons learned the hard way</li>
+					<li>Whatever's on my mind after dark</li>
+				</ul>
+				<p>
+					Browse by <a href="/tags">tag</a> or <a href="/categories">category</a>,
+					or just read <a href="/blog">everything</a>. Thanks for stopping by.
+				</p>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>

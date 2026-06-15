@@ -5,98 +5,94 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
+import Badge from '../components/starwind/badge/index';
+import { slugify } from '../utils/taxonomy';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, category, tags = [] } =
+	Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
 	<head>
-		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-				padding: 0;
-			}
-			.hero-image {
-				width: 100%;
-				max-width: 1020px;
-				margin: 2em auto 0;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				width: 100%;
-				border-radius: var(--radius);
-				border: 1px solid var(--border);
-				box-shadow: var(--shadow);
-			}
-			.prose {
-				width: var(--maxw);
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em 1em 3em;
-				color: var(--text);
-			}
-			.back {
-				display: inline-block;
-				margin: 2em 0 0;
-				color: var(--text-muted);
-				font-size: 0.95rem;
-			}
-			.title {
-				margin-bottom: 1.5em;
-				padding: 1.5em 0 1em;
-				text-align: center;
-				line-height: 1.1;
-				border-bottom: 1px solid var(--border);
-			}
-			.title h1 {
-				margin: 0 0 0.3em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: var(--text-faint);
-				font-size: 0.95rem;
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
+		<BaseHead title={title} description={description} image={heroImage} />
 	</head>
-
 	<body>
 		<Header />
-		<main>
+		<main class="mx-auto w-[680px] max-w-[calc(100%-2.5rem)] py-12">
 			<article>
+				<a
+					href="/blog"
+					class="mb-8 inline-block text-sm text-muted-foreground transition-colors hover:text-foreground"
+				>
+					← All posts
+				</a>
+
+				<header class="mb-7">
+					<div class="flex items-center gap-2 text-sm text-faint">
+						<FormattedDate date={pubDate} />
+						{
+							category && (
+								<>
+									<span aria-hidden="true">·</span>
+									<a
+										href={`/categories/${slugify(category)}/`}
+										class="text-primary transition-colors hover:text-primary-accent"
+									>
+										{category}
+									</a>
+								</>
+							)
+						}
+					</div>
+					<h1
+						class="mt-2 text-[clamp(2rem,5vw,2.6rem)] font-bold leading-tight tracking-tight"
+					>
+						{title}
+					</h1>
+					{
+						updatedDate && (
+							<p class="mt-2 text-sm italic text-faint">
+								Updated <FormattedDate date={updatedDate} />
+							</p>
+						)
+					}
+				</header>
+
 				{
 					heroImage && (
-						<div class="hero-image">
-							<Image width={1020} height={510} src={heroImage} alt="" />
-						</div>
+						<Image
+							class="mb-8 w-full rounded-lg border border-border"
+							width={1020}
+							height={510}
+							src={heroImage}
+							alt=""
+						/>
 					)
 				}
-				<div class="prose">
-					<a href="/blog" class="back">← Back to all posts</a>
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-					</div>
+
+				<div class="prose prose-invert max-w-none">
 					<slot />
 				</div>
+
+				{
+					tags.length > 0 && (
+						<footer class="mt-12 flex flex-wrap gap-2 border-t border-border pt-6">
+							{tags.map((tag) => (
+								<Badge
+									href={`/tags/${slugify(tag)}/`}
+									variant="outline"
+									size="sm"
+									class="text-muted-foreground hover:text-foreground"
+								>
+									#{tag}
+								</Badge>
+							))}
+						</footer>
+					)
+				}
 			</article>
 		</main>
 		<Footer />

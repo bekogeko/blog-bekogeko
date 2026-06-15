@@ -1,0 +1,57 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { SITE_TITLE } from '../../consts';
+import { getCategories } from '../../utils/taxonomy';
+
+const categories = await getCategories();
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+	<head>
+		<BaseHead
+			title={`Categories · ${SITE_TITLE}`}
+			description="Browse posts by category."
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="mx-auto w-[760px] max-w-[calc(100%-2.5rem)] py-12">
+			<header class="mb-8">
+				<h1 class="text-[clamp(2rem,5vw,2.75rem)] font-bold tracking-tight">
+					Categories
+				</h1>
+				<p class="mt-1 text-muted-foreground">
+					{categories.length} categories across the blog.
+				</p>
+			</header>
+			<ul class="divide-y divide-border">
+				{
+					categories.map((cat) => (
+						<li>
+							<a
+								href={`/categories/${cat.slug}/`}
+								class="group flex items-baseline justify-between gap-4 py-4"
+							>
+								<span class="text-lg font-bold text-card-foreground transition-colors group-hover:text-primary">
+									{cat.name}
+								</span>
+								<span class="shrink-0 text-sm text-faint">
+									{cat.count} {cat.count === 1 ? 'post' : 'posts'}
+								</span>
+							</a>
+						</li>
+					))
+				}
+				{
+					categories.length === 0 && (
+						<li class="py-4 text-muted-foreground">No categories yet.</li>
+					)
+				}
+			</ul>
+		</main>
+		<Footer />
+	</body>
+</html>

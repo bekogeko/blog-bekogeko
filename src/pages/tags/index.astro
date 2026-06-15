@@ -1,0 +1,47 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import Badge from '../../components/starwind/badge/index';
+import { SITE_TITLE } from '../../consts';
+import { getTags } from '../../utils/taxonomy';
+
+const tags = await getTags();
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+	<head>
+		<BaseHead title={`Tags · ${SITE_TITLE}`} description="Browse posts by tag." />
+	</head>
+	<body>
+		<Header />
+		<main class="mx-auto w-[760px] max-w-[calc(100%-2.5rem)] py-12">
+			<header class="mb-8">
+				<h1 class="text-[clamp(2rem,5vw,2.75rem)] font-bold tracking-tight">
+					Tags
+				</h1>
+				<p class="mt-1 text-muted-foreground">
+					{tags.length} tags across the blog.
+				</p>
+			</header>
+			<div class="flex flex-wrap gap-2.5">
+				{
+					tags.map((tag) => (
+						<Badge
+							href={`/tags/${tag.slug}/`}
+							variant="outline"
+							size="md"
+							class="text-muted-foreground hover:text-foreground"
+						>
+							#{tag.name}
+							<span class="text-faint tabular-nums">{tag.count}</span>
+						</Badge>
+					))
+				}
+				{tags.length === 0 && <p class="text-muted-foreground">No tags yet.</p>}
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>

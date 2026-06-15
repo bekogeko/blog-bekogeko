@@ -1,0 +1,58 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { slugify } from '../utils/taxonomy';
+import Badge from './starwind/badge/index';
+import FormattedDate from './FormattedDate.astro';
+
+interface Props {
+	posts: CollectionEntry<'blog'>[];
+}
+
+const { posts } = Astro.props;
+---
+
+<ul class="divide-y divide-border">
+	{
+		posts.map((post) => (
+			<li class="py-6 first:pt-0">
+				<a
+					href={`/blog/${post.id}/`}
+					class="group flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-4"
+				>
+					<span class="w-26 shrink-0 text-sm tabular-nums text-faint">
+						<FormattedDate date={post.data.pubDate} />
+					</span>
+					<span class="text-lg font-bold tracking-tight text-card-foreground transition-colors group-hover:text-primary">
+						{post.data.title}
+					</span>
+				</a>
+				<p class="mt-1 text-[0.95rem] text-muted-foreground sm:ml-30">
+					{post.data.description}
+				</p>
+				{(post.data.category || post.data.tags.length > 0) && (
+					<div class="mt-3 flex flex-wrap gap-2 sm:ml-30">
+						{post.data.category && (
+							<Badge
+								href={`/categories/${slugify(post.data.category)}/`}
+								variant="primary"
+								size="sm"
+							>
+								{post.data.category}
+							</Badge>
+						)}
+						{post.data.tags.map((tag) => (
+							<Badge
+								href={`/tags/${slugify(tag)}/`}
+								variant="outline"
+								size="sm"
+								class="text-muted-foreground hover:text-foreground"
+							>
+								#{tag}
+							</Badge>
+						))}
+					</div>
+				)}
+			</li>
+		))
+	}
+</ul>
